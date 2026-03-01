@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  hris-db:
+    image: postgres:15-alpine
+    container_name: hris_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
+      POSTGRES_DB: ${DB_NAME:-hris_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - hris_network
+
+  hris-backend:
+    build: 
+      context: ./HRIS-API
+      dockerfile: Dockerfile
+    container_name: hris_golang_api
+    restart: always
+    depends_on:
+      - hris-db
+    environment:
+      # Pass DB logic down from here or via .env
+      - DB_HOST=hris-db
+      - DB_PORT=5432
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
+      - DB_NAME=${DB_NAME:-hris_db}
+      - JWT_SECRET=${JWT_SECRET:-super-secret-key-123}
+      - PORT=8082
+    ports:
+      # Expose Fiber internally mapping to HOST Port 8082
+      - "8082:8082"
+    networks:
+      - hris_network
+
+  hris-frontend:
+    build:
+      context: ./dashboard
+      dockerfile: Dockerfile
+    container_name: hris_react_web
+    restart: always
+    ports:
+      # Expose Nginx internally mapping to HOST Port 3030
+      - "3030:80"
+    depends_on:
+      - hris-backend
+    networks:
+      - hris_network
+
+networks:
+  hris_network:
+    driver: bridge
+
+volumes:
+  postgres_data:

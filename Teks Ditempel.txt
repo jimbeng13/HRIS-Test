@@ -1,0 +1,1 @@
+sudo pacman -S nodejs-lts-iron npm

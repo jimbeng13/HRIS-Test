@@ -1,0 +1,79 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1.5rem 2rem;
+    background-color: var(--secondary-bg);
+    width: 100%;
+}
+
+.header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.header-title {
+    font-size: 1.5rem;
+    color: #0F172A;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+}
+
+.header-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-light);
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.location-pin {
+    color: #EF4444;
+    font-size: 1rem;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.time-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background-color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.time-badge.border-primary {
+    border-color: rgba(28, 88, 217, 0.2);
+}
+
+.text-primary {
+    color: var(--primary-blue);
+}
+
+.time-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.time-text {
+    font-weight: 700;
+    color: #0F172A;
+    font-size: 1rem;
+    line-height: 1.2;
+}
+
+.time-label {
+    font-size: 0.65rem;
+    color: var(--text-light);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}
