@@ -1,0 +1,27 @@
+name: Deploy to aaPanel Production Server
+
+on:
+  push:
+    branches:
+      - main # Change this if your default branch is different
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Deploy to Server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_HOST }}     # e.g. 192.168.1.1 (Server IP)
+          username: ${{ secrets.SERVER_USER }} # e.g. root
+          password: ${{ secrets.SERVER_PASS }} # The root password (or you can use SSH key)
+          # key: ${{ secrets.SERVER_SSH_KEY }} # Uncomment this and remove password if using SSH Key
+          port: ${{ secrets.SERVER_PORT }}     # Usually 22
+          script: |
+             # Go to the project directory on your aaPanel server and run deploy.sh
+             cd /www/wwwroot/hris.domainanda.com
+             bash deploy.sh
